@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Button, Text, useNavigation, View } from "react-xnft";
 import { Header } from "../components/Header";
+import { Typography } from "../components/Typography";
 import { useVaults } from "../components/VaultContext";
 import { VaultItem } from "../components/VaultItem";
 
@@ -15,9 +16,15 @@ export const Home = () => {
         <Text>PsyFi</Text>
       </Header>
       <View style={{ marginLeft: 20, marginRight: 20, marginTop: 12 }}>
-        <Text>My position value</Text>
-        <Text>$0.0</Text>
-        <Text>Reward</Text>
+        <Typography color="primary" variant="text4">
+          My position value
+        </Typography>
+        <Typography color="title" variant="text5">
+          $0.0
+        </Typography>
+        <Typography color="primary" variant="text4" style={{ marginTop: 16 }}>
+          Reward
+        </Typography>
         <View
           style={{
             display: "flex",
@@ -26,10 +33,13 @@ export const Home = () => {
             marginTop: 42,
           }}
         >
-          <Text>0.0 SRM</Text>
-          <Button onClick={() => navigation.push("vault")}>
-            <Text>Claim</Text>
-          </Button>
+          <Typography color="title" variant="text6">
+            0.0 SRM
+          </Typography>
+          {/* TODO make this a button */}
+          <Typography color="link" variant="text4">
+            {"Claim>"}
+          </Typography>
         </View>
         <View
           style={{
@@ -39,8 +49,12 @@ export const Home = () => {
             marginTop: 44,
           }}
         >
-          <Text>Vault</Text>
-          <Text>Only my positions</Text>
+          <Typography color="title" variant="text2">
+            Vault
+          </Typography>
+          <Typography color="primary" variant="text7">
+            Only my positions
+          </Typography>
         </View>
         <View style={{ paddingTop: 8 }}>
           {vaultList.map((id) => (
