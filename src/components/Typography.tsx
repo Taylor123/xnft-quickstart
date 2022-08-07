@@ -20,7 +20,9 @@ const colors = {
   title: "#FFFFFF",
 };
 
+ // TODO better naming
 const variants = {
   text1: { fontSize: 13, fontWeight: 500 },
   text2: { fontSize: 16, fontWeight: 600 },
+  text3: { fontSize: 12, fontWeight: 400 },
 };
