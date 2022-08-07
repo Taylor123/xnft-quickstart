@@ -1,5 +1,6 @@
 import React from "react";
 import ReactXnft, { Text, View } from "react-xnft";
+import { TokenContextProvider } from "./components/TokenContext";
 import { VaultContextProvider } from "./components/VaultContext";
 import { Navigator } from "./Navigator";
 
@@ -12,8 +13,10 @@ ReactXnft.events.on("connect", () => {
 
 export function App() {
   return (
-    <VaultContextProvider>
-      <Navigator />
-    </VaultContextProvider>
+    <TokenContextProvider>
+      <VaultContextProvider>
+        <Navigator />
+      </VaultContextProvider>
+    </TokenContextProvider>
   );
 }

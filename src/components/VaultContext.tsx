@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { Vault } from "../types";
-import { fetchAllVaults } from "../utils/fetchAllVaults";
+import { getVaults } from "../utils/api";
 
 const VaultContext = createContext<Record<string, Vault>>({});
 
@@ -17,7 +17,7 @@ export const VaultContextProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     // fetch vaults
     (async () => {
-      const resp = await fetchAllVaults();
+      const resp = await getVaults();
       setVaults(resp?.vaults ?? {});
     })();
   }, []);
