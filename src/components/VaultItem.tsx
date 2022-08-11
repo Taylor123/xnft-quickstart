@@ -4,17 +4,13 @@ import { useVault } from "./VaultContext";
 import { Typography } from "./Typography";
 import { ProgressBar } from "./ProgressBar";
 import { useToken } from "./TokenContext";
+import { useParsedVaultType } from "../hooks/useParsedVaultType";
 
 export const VaultItem: React.FC<{ id: string }> = ({ id }) => {
   const vault = useVault(id);
   const token = useToken(vault.accounts.optionsUnderlyingMint);
   const navigation = useNavigation();
-  const [asset, vaultType] = useMemo(() => {
-    const [asset, ...rest] = vault.name.split(" ");
-    const type = rest.join(" ");
-
-    return [asset, type.toLowerCase()];
-  }, []);
+  const [asset, vaultType] = useParsedVaultType(id);
   const depositRatio = vault.deposits.current / vault.deposits.max;
   const depositPercent = depositRatio * 100;
 
