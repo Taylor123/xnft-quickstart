@@ -3,19 +3,24 @@ import { Image, View } from "react-xnft";
 import { useTokens } from "../components/TokenContext";
 import { Typography } from "../components/Typography";
 import { useVault } from "../components/VaultContext";
+import { useParsedVaultType } from "../hooks/useParsedVaultType";
 
 export const Vault: React.FC<{ id: string }> = ({ id }) => {
   const vault = useVault(id);
   const tokens = useTokens();
   const token = tokens[vault.accounts.optionsUnderlyingMint];
-  const [asset, ...rest] = vault.name.split(" ");
-  const vaultType = rest.join(" ").toLowerCase();
+  // const [asset, ...rest] = vault.name.split(" ");
+  // const vaultType = rest.join(" ").toLowerCase();
+  
+  // The usage of this custom hook (which has no hooks within it) breaks
+  // the renderer. 
+  const [asset, vaultType] = useParsedVaultType(id);
 
   return (
     <View style={{ marginLeft: 20, marginRight: 20 }}>
       <View
         style={{
-          alignItems: 'center',
+          alignItems: "center",
           display: "flex",
           flexDirection: "row",
         }}
