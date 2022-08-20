@@ -1,10 +1,11 @@
 import React from "react";
 import { Button } from "react-xnft";
 
-export const PsyButton: React.FC<{ children?: React.ReactNode, style?: Record<string, unknown> }> = ({
-  style,
-  ...props
-}) => {
+export const PsyButton: React.FC<{
+  children?: React.ReactNode;
+  onClick?: () => void;
+  style?: Record<string, unknown>;
+}> = ({ style, ...props }) => {
   return (
     <Button
       style={{

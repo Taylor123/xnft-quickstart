@@ -1,18 +1,17 @@
 import React from "react";
-import { Button, Image, View } from "react-xnft";
+import { useNavigation, View } from "react-xnft";
 import { ProgressBar } from "../components/ProgressBar";
 import { PsyButton } from "../components/PsyButton";
 import { useTokens } from "../components/TokenContext";
 import { Typography } from "../components/Typography";
 import { useVault } from "../components/VaultContext";
+import { VaultHeader } from "../components/VaultHeader";
 
 export const Vault: React.FC<{ id: string }> = ({ id }) => {
   const vault = useVault(id);
   const tokens = useTokens();
-  const token = tokens[vault.accounts.optionsUnderlyingMint];
+  const navigation = useNavigation();
   const collateralToken = tokens[vault.accounts.collateralAssetMint];
-  const [asset, ...rest] = vault.name.split(" ");
-  const vaultType = rest.join(" ").toLowerCase();
   const depositRatio = vault.deposits.current / vault.deposits.max;
   const depositPercent = depositRatio * 100;
   // TODO wire up position
@@ -20,25 +19,7 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <View style={{ marginLeft: 20, marginRight: 20 }}>
-      <View
-        style={{
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <Image
-          src={token.icon}
-          style={{ height: 40, width: 40, marginRight: 12 }}
-        />
-        <Typography
-          color="title"
-          variant="text6"
-          style={{ textTransform: "capitalize" }}
-        >
-          {asset} {vaultType}
-        </Typography>
-      </View>
+      <VaultHeader id={id} />
       <Typography color="title" variant="text2" style={{ marginTop: 20 }}>
         Vault Capacity
       </Typography>
@@ -123,7 +104,9 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
           marginTop: 32,
         }}
       >
-        <PsyButton>Deposit</PsyButton>
+        <PsyButton onClick={() => navigation.push("deposit", { id })}>
+          Deposit
+        </PsyButton>
         {!!position && (
           <>
             <View style={{ marginLeft: 8 }} />
