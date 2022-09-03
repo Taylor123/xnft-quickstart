@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Button, Text, useNavigation, View } from "react-xnft";
+import { Text, useNavigation, View } from "react-xnft";
 import { Header } from "../components/Header";
 import { Typography } from "../components/Typography";
 import { useVaults } from "../components/VaultContext";
