@@ -30,4 +30,5 @@ const variants = {
   text5: { fontSize: 24, fontWeight: 600 },
   text6: { fontSize: 16, fontWeight: 500 },
   text7: { fontSize: 13, fontWeight: 400 },
+  text8: { fontSize: 14, fontWeight: 700 },
 };

@@ -5,7 +5,10 @@ export const NumberInput: React.FC<{
   onChange: (v: string) => void;
   placeholder?: string;
   value: string;
-}> = (props) => {
+}> = ({ onChange, ...props }) => {
+  const _onChange = ({ data }) => {
+    onChange(data.value)
+  }
   return (
     <TextField
       type="number"
@@ -15,6 +18,7 @@ export const NumberInput: React.FC<{
         borderColor: "rgba(255, 255, 255, 0.15)",
         borderWidth: 1,
       }}
+      onChange={_onChange}
       {...props}
     />
   );

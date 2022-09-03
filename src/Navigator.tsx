@@ -19,9 +19,9 @@ export const Navigator = () => {
         }
       }}
     >
-      <Stack.Screen name="deposit" component={Deposit} />
-      <Stack.Screen name="home" component={Home} />
-      <Stack.Screen name="vault" component={Vault} />
+      <Stack.Screen name="deposit" component={(props) => <Deposit {...props} /> } />
+      <Stack.Screen name="home" component={(props) => <Home {...props} />} />
+      <Stack.Screen name="vault" component={(props) => <Vault {...props} />} />
     </Stack.Navigator>
   );
 };

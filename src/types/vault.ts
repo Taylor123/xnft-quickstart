@@ -50,6 +50,11 @@ export type Vault = {
       apyAfterFees: number;
       averageSaleYield: number;
     };
+    standardApy: {
+      apyBeforeFees: number;
+      averageEpochYield: number;
+      epochsCounted: number;
+    };
     stakingApy: number;
     currentEpochApy: number;
   };
