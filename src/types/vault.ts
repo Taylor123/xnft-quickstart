@@ -2,6 +2,10 @@ export type Vault = {
   deposits: { max: number; current: number };
   name: string;
   fees: { withdrawal: number; performance: number };
+  collateralTokenPrice: {
+    lastModified: number;
+    value: number;
+  };
   strategyType: number;
   visibility: number;
   staking: {

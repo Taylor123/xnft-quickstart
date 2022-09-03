@@ -2,13 +2,14 @@ import React, { useMemo } from "react";
 import { Text, useNavigation, View } from "react-xnft";
 import { Header } from "../components/Header";
 import { Typography } from "../components/Typography";
-import { useVaults } from "../components/VaultContext";
+import { useVaultPortfolioValue, useVaults } from "../components/VaultContext";
 import { VaultItem } from "../components/VaultItem";
 
 export const Home = () => {
   const navigation = useNavigation();
   const vaults = useVaults();
   const vaultList = useMemo(() => Object.keys(vaults), [vaults]);
+  const portfolioValue = useVaultPortfolioValue();
 
   return (
     <View>
@@ -20,7 +21,7 @@ export const Home = () => {
           My position value
         </Typography>
         <Typography color="title" variant="text5">
-          $0.0
+          ${portfolioValue.toFixed(2)}
         </Typography>
         <Typography color="primary" variant="text4" style={{ marginTop: 16 }}>
           Reward

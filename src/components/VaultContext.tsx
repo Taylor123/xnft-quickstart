@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Vault } from "../types";
 import { getVaults } from "../utils/api";
+import { useTokenAccountMap } from "./TokenAccountContext";
+import { useTokens } from "./TokenContext";
 
 const VaultContext = createContext<Record<string, Vault>>({});
 
@@ -33,4 +35,26 @@ export const useVault = (id: string) => {
   const vaults = useVaults();
 
   return useMemo(() => vaults[id], [id, vaults]);
+};
+
+export const useVaultPortfolioValue = () => {
+  const vaults = useVaults();
+  const tokenAccountsMap = useTokenAccountMap();
+
+  return useMemo(
+    () =>
+      Object.values(vaults).reduce((acc, vault) => {
+        const vaultTokenAccount = tokenAccountsMap.get(
+          vault.accounts.vaultOwnershipTokenMint
+        );
+        const vaultTokenUiAmount = vaultTokenAccount?.amount?.toNumber() || 0;
+        const unstakedAmountInCollateralAsset =
+          vault.valuePerVaultToken * vaultTokenUiAmount;
+        const position =
+          unstakedAmountInCollateralAsset * vault.collateralTokenPrice.value;
+
+        return acc + position;
+      }, 0),
+    [tokenAccountsMap, vaults]
+  );
 };
