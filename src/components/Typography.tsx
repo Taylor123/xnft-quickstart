@@ -3,7 +3,7 @@ import { Text } from "react-xnft";
 
 export const Typography: React.FC<{
   color: keyof typeof colors;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   // TODO better style type
   style?: Record<string, any>;
   variant: keyof typeof variants;

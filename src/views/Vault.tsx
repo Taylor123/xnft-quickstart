@@ -6,6 +6,7 @@ import { useTokens } from "../components/TokenContext";
 import { Typography } from "../components/Typography";
 import { useVault } from "../components/VaultContext";
 import { VaultHeader } from "../components/VaultHeader";
+import { useVaultAmountInCollateralAsset } from "../hooks/useVaultAmountInCollateralAsset";
 
 export const Vault: React.FC<{ id: string }> = ({ id }) => {
   const vault = useVault(id);
@@ -14,8 +15,7 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
   const collateralToken = tokens[vault.accounts.collateralAssetMint];
   const depositRatio = vault.deposits.current / vault.deposits.max;
   const depositPercent = depositRatio * 100;
-  // TODO wire up position
-  const position = 1;
+  const position = useVaultAmountInCollateralAsset(id);
 
   return (
     <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -94,7 +94,7 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
           Your Position
         </Typography>
         <Typography color="title" variant="text7">
-          TODO
+          {position.toString()} {collateralToken.tokenSymbol}
         </Typography>
       </View>
       <View
@@ -107,7 +107,7 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
         <PsyButton onClick={() => navigation.push("deposit", { id })}>
           Deposit
         </PsyButton>
-        {!!position && (
+        {!!position.gt(0) && (
           <>
             <View style={{ marginLeft: 8 }} />
             <PsyButton>Withdraw</PsyButton>

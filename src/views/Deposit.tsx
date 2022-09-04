@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import { View } from "react-xnft";
 import { NumberInput } from "../components/NumberInput";
 import { PsyButton } from "../components/PsyButton";
-import { useToken, useTokens } from "../components/TokenContext";
+import { useToken } from "../components/TokenContext";
 import { Typography } from "../components/Typography";
 import { useVault } from "../components/VaultContext";
 import { VaultHeader } from "../components/VaultHeader";
+import { useNormalizedTokenAmount } from "../hooks/useNormalizedTokenAmount";
 
 export const Deposit: React.FC<{ id: string }> = ({ id }) => {
   const vault = useVault(id);
   const collateralToken = useToken(vault.accounts.collateralAssetMint);
+  const collateralTokenAmount = useNormalizedTokenAmount(
+    vault.accounts.collateralAssetMint
+  );
 
   const [size, setSize] = useState("");
   const [apyCurrent, setCurrentApy] = useState(
     vault?.apy.standardApy.apyBeforeFees ?? 0
   );
-  // TODO wire up
-  const availableCollateral = 100;
 
   return (
     <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -30,11 +32,9 @@ export const Deposit: React.FC<{ id: string }> = ({ id }) => {
         }}
       >
         <Typography color="primary" variant="text7">
-          In wallet: {availableCollateral} {collateralToken.tokenSymbol}
+          In wallet: {collateralTokenAmount.toString()} {collateralToken.tokenSymbol}
         </Typography>
-        {/* <Typography>
-          TODO make TextButton for max
-        </Typography> */}
+        {/* <Typography>TODO make TextButton for max</Typography> */}
       </View>
       <NumberInput onChange={setSize} placeholder="Amount" value={size} />
       <View style={{ marginBottom: 24, marginTop: 22 }}>
@@ -69,7 +69,7 @@ export const Deposit: React.FC<{ id: string }> = ({ id }) => {
           Estimate Returns
         </Typography>
         <Typography color="title" variant="text8">
-          {`${(parseFloat(size || '0') * (1 + apyCurrent / 100)).toFixed(2)} ${
+          {`${(parseFloat(size || "0") * (1 + apyCurrent / 100)).toFixed(2)} ${
             collateralToken.tokenSymbol
           }`}
         </Typography>
