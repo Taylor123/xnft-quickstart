@@ -1,5 +1,6 @@
 import { BN } from "@project-serum/anchor";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useConnection, usePublicKey } from "react-xnft";
 import { fetchTokens } from "../utils/solana";
 
 type LocalTokenAccount = {
@@ -14,13 +15,15 @@ const WRAPPED_SOL_ADDRESS = "So11111111111111111111111111111111111111112";
 export const TokenAccountContextProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  const publicKey = usePublicKey();
+  const connection = useConnection();
   const [tokenAccounts, setTokenAccounts] =
     useState<Map<string, LocalTokenAccount>>(emptyMap);
   useEffect(() => {
     (async () => {
       const [tokenResp, accountInfo] = await Promise.all([
-        fetchTokens(window.xnft.publicKey),
-        window.xnft.connection.getAccountInfo(window.xnft.publicKey),
+        fetchTokens(publicKey),
+        connection.getAccountInfo(publicKey),
       ]);
       tokenResp.set(WRAPPED_SOL_ADDRESS, {
         amount: new BN(accountInfo?.lamports ?? 0),

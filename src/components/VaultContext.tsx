@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { useNetworkType } from "../hooks/useNetworkType";
 import { Vault } from "../types";
 import { getVaults } from "../utils/api";
 import { useTokenAccountMap } from "./TokenAccountContext";
@@ -15,14 +16,15 @@ const VaultContext = createContext<Record<string, Vault>>({});
 export const VaultContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const network = useNetworkType();
   const [vaults, setVaults] = useState({});
   useEffect(() => {
     // fetch vaults
     (async () => {
-      const resp = await getVaults();
+      const resp = await getVaults(network);
       setVaults(resp?.vaults ?? {});
     })();
-  }, []);
+  }, [network]);
 
   return (
     <VaultContext.Provider value={vaults}>{children}</VaultContext.Provider>

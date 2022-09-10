@@ -9,23 +9,26 @@ export async function fetchTokens(
   //
   // Fetch the accounts.
   //
-  const resp = await window.xnft.connection.getTokenAccountsByOwner(
-    publicKey,
-    {
-      programId: TOKEN_PROGRAM_ID,
-    }
-  );
+  const resp = await window.xnft.connection.getTokenAccountsByOwner(publicKey, {
+    programId: TOKEN_PROGRAM_ID,
+  });
   //
   // Decode the data.
   //
   const tokens: Array<[string, any]> = resp.value.map(
-    ({ account, pubkey }: any) => [
-      pubkey.toString(),
-      {
-        ...tokenClient.coder.accounts.decode("token", account.data),
-        key: pubkey,
-      },
-    ]
+    ({ account, pubkey }: any) => {
+      const tokenAccount = tokenClient.coder.accounts.decode(
+        "token",
+        account.data
+      );
+      return [
+        tokenAccount.mint.toString(),
+        {
+          ...tokenAccount,
+          key: pubkey,
+        },
+      ];
+    }
   );
   //
   // Filter out any invalid tokens.
