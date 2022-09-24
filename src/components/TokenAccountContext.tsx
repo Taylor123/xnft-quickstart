@@ -5,6 +5,7 @@ import { fetchTokens } from "../utils/solana";
 
 type LocalTokenAccount = {
   amount: BN;
+  key: string;
 };
 
 const emptyMap = new Map();

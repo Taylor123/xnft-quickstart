@@ -59,7 +59,7 @@ export const Home = () => {
         </View>
         <View style={{ paddingTop: 8 }}>
           {vaultList.map((id) => (
-            <View style={{ marginBottom: 8 }}>
+            <View key={id} style={{ marginBottom: 8 }}>
               <VaultItem id={id} />
             </View>
           ))}

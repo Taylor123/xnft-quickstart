@@ -1,24 +1,37 @@
-import React, { useState } from "react";
-import { View } from "react-xnft";
+import BigNumber from "bignumber.js";
+import React, { useCallback, useState } from "react";
+import { Button, TextField, View } from "react-xnft";
 import { NumberInput } from "../components/NumberInput";
 import { PsyButton } from "../components/PsyButton";
 import { useToken } from "../components/TokenContext";
 import { Typography } from "../components/Typography";
 import { useVault } from "../components/VaultContext";
 import { VaultHeader } from "../components/VaultHeader";
+import { useDeposit } from "../hooks/useDeposit";
 import { useNormalizedTokenAmount } from "../hooks/useNormalizedTokenAmount";
 
 export const Deposit: React.FC<{ id: string }> = ({ id }) => {
+  const [size, setSize] = useState("");
   const vault = useVault(id);
   const collateralToken = useToken(vault.accounts.collateralAssetMint);
   const collateralTokenAmount = useNormalizedTokenAmount(
     vault.accounts.collateralAssetMint
   );
 
-  const [size, setSize] = useState("");
+
+  const deposit = useDeposit(id);
+  const onDeposit = async () => {
+    const _size = new BigNumber(size);
+    if (!size || _size.eq(0)) {
+      // TODO error handling
+      return;
+    }
+    await deposit(_size);
+  };
   const [apyCurrent, setCurrentApy] = useState(
     vault?.apy.standardApy.apyBeforeFees ?? 0
   );
+
 
   return (
     <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -32,13 +45,14 @@ export const Deposit: React.FC<{ id: string }> = ({ id }) => {
         }}
       >
         <Typography color="primary" variant="text7">
-          In wallet: {collateralTokenAmount.toString()} {collateralToken.tokenSymbol}
+          In wallet: {collateralTokenAmount.toString()}{" "}
+          {collateralToken.tokenSymbol}
         </Typography>
         {/* <Typography>TODO make TextButton for max</Typography> */}
       </View>
       <NumberInput onChange={setSize} placeholder="Amount" value={size} />
       <View style={{ marginBottom: 24, marginTop: 22 }}>
-        <PsyButton onClick={() => {}} style={{ width: "100%" }}>
+        <PsyButton onClick={() => onDeposit()} style={{ width: "100%" }}>
           Deposit
         </PsyButton>
       </View>
