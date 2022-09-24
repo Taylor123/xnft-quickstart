@@ -3,6 +3,7 @@ import { Stack } from "react-xnft";
 import { Deposit } from "./views/Deposit";
 import { Home } from "./views/Home";
 import { Vault } from "./views/Vault";
+import { Withdraw } from "./views/Withdraw";
 
 export const Navigator = () => {
   return (
@@ -22,6 +23,7 @@ export const Navigator = () => {
       <Stack.Screen name="deposit" component={(props) => <Deposit {...props} /> } />
       <Stack.Screen name="home" component={(props) => <Home {...props} />} />
       <Stack.Screen name="vault" component={(props) => <Vault {...props} />} />
+      <Stack.Screen name="withdraw" component={(props) => <Withdraw {...props} /> } />
     </Stack.Navigator>
   );
 };

@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
-import React, { useCallback, useState } from "react";
-import { Button, TextField, View } from "react-xnft";
+import React, { useState } from "react";
+import { View } from "react-xnft";
 import { NumberInput } from "../components/NumberInput";
 import { PsyButton } from "../components/PsyButton";
 import { useToken } from "../components/TokenContext";

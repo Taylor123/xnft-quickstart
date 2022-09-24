@@ -110,7 +110,9 @@ export const Vault: React.FC<{ id: string }> = ({ id }) => {
         {!!position.gt(0) && (
           <>
             <View style={{ marginLeft: 8 }} />
-            <PsyButton>Withdraw</PsyButton>
+            <PsyButton onClick={() => navigation.push("withdraw", { id })}>
+              Withdraw
+            </PsyButton>
           </>
         )}
       </View>
