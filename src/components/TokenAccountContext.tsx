@@ -1,5 +1,5 @@
 import { BN } from "@project-serum/anchor";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useConnection, usePublicKey } from "react-xnft";
 import { fetchTokens } from "../utils/solana";
 
@@ -9,8 +9,9 @@ type LocalTokenAccount = {
 };
 
 const emptyMap = new Map();
-const TokenAccountContext =
-  createContext<Map<string, LocalTokenAccount>>(emptyMap);
+const TokenAccountContext = createContext<
+  [Map<string, LocalTokenAccount>, () => void]
+>([emptyMap, () => {}]);
 const WRAPPED_SOL_ADDRESS = "So11111111111111111111111111111111111111112";
 
 export const TokenAccountContextProvider: React.FC<{
@@ -20,30 +21,34 @@ export const TokenAccountContextProvider: React.FC<{
   const connection = useConnection();
   const [tokenAccounts, setTokenAccounts] =
     useState<Map<string, LocalTokenAccount>>(emptyMap);
-  useEffect(() => {
-    (async () => {
-      const [tokenResp, accountInfo] = await Promise.all([
-        fetchTokens(publicKey),
-        connection.getAccountInfo(publicKey),
-      ]);
-      tokenResp.set(WRAPPED_SOL_ADDRESS, {
-        amount: new BN(accountInfo?.lamports ?? 0),
-      });
+  const updateTokenAccounts = useCallback(async () => {
+    const [tokenResp, accountInfo] = await Promise.all([
+      fetchTokens(publicKey, connection),
+      connection.getAccountInfo(publicKey),
+    ]);
+    tokenResp.set(WRAPPED_SOL_ADDRESS, {
+      amount: new BN(accountInfo?.lamports ?? 0),
+    });
 
-      setTokenAccounts(tokenResp);
-    })();
-  }, []);
+    setTokenAccounts(tokenResp);
+  }, [connection, publicKey]);
+
+  useEffect(() => {
+    updateTokenAccounts();
+  }, [updateTokenAccounts]);
 
   return (
-    <TokenAccountContext.Provider value={tokenAccounts}>
+    <TokenAccountContext.Provider value={[tokenAccounts, updateTokenAccounts]}>
       {children}
     </TokenAccountContext.Provider>
   );
 };
 
-export const useTokenAccountMap = () => useContext(TokenAccountContext);
+export const useTokenAccountMap = () => useContext(TokenAccountContext)[0];
+export const useUpdateTokenAccounts = () => useContext(TokenAccountContext)[1];
+
 
 export const useTokenAccount = (mint: string) => {
-  const tokenAccounts = useContext(TokenAccountContext);
+  const [tokenAccounts] = useContext(TokenAccountContext);
   return tokenAccounts.get(mint);
 };
