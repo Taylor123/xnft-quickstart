@@ -42,6 +42,7 @@ export const useVault = (id: string) => {
 export const useVaultPortfolioValue = () => {
   const vaults = useVaults();
   const tokenAccountsMap = useTokenAccountMap();
+  const tokenMap = useTokens()
 
   return useMemo(
     () =>
@@ -49,7 +50,10 @@ export const useVaultPortfolioValue = () => {
         const vaultTokenAccount = tokenAccountsMap.get(
           vault.accounts.vaultOwnershipTokenMint
         );
-        const vaultTokenUiAmount = vaultTokenAccount?.amount?.toNumber() || 0;
+        const vaultOwnershipToken = tokenMap[vault.accounts.vaultOwnershipTokenMint]
+        const vaultTokenAmount = vaultTokenAccount?.amount?.toNumber() || 0;
+        const vaultTokenUiAmount =
+          vaultTokenAmount * 10 ** -vaultOwnershipToken.decimals;
         const unstakedAmountInCollateralAsset =
           vault.valuePerVaultToken * vaultTokenUiAmount;
         const position =
