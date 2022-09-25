@@ -49,6 +49,26 @@ export const Withdraw: React.FC<{ id: string }> = ({ id }) => {
           Withdraw
         </PsyButton>
       </View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 10,
+        }}
+      >
+        <Typography color="title" variant="text1">
+          Total Fees
+        </Typography>
+        <View>
+          <Typography color="title" variant="text8">
+            {vault.fees.performance}% Performance
+          </Typography>
+          <Typography color="title" variant="text8">
+            {vault.fees.withdrawal}% Withdrawal
+          </Typography>
+        </View>
+      </View>
     </View>
   );
 };

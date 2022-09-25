@@ -80,7 +80,7 @@ export const Deposit: React.FC<{ id: string }> = ({ id }) => {
         }}
       >
         <Typography color="title" variant="text1">
-          Estimate Returns
+          Estimated Returns
         </Typography>
         <Typography color="title" variant="text8">
           {`${(parseFloat(size || "0") * (1 + apyCurrent / 100)).toFixed(2)} ${
