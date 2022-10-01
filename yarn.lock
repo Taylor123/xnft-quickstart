@@ -3052,10 +3052,10 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-xnft@^0.1.0-latest.2036:
-  version "0.1.0-latest.2036"
-  resolved "https://registry.yarnpkg.com/react-xnft/-/react-xnft-0.1.0-latest.2036.tgz#eb950473898c8e83f29a0bb68a3f3b02454932db"
-  integrity sha512-1tdVbnNU3iIxU38pM3PzNqkHfGIxZAUbcEsMBIUCJkHOKSrIMNQZ4hNPwyEhQWRJhzylcHfER3jCGKBFgyMmZg==
+react-xnft@^0.1.0-latest.2165:
+  version "0.1.0-latest.2165"
+  resolved "https://registry.yarnpkg.com/react-xnft/-/react-xnft-0.1.0-latest.2165.tgz#2ae308cc5772c40f8ff2af23bf8c78c9cc8f28b3"
+  integrity sha512-pUdNM7pkTfgFIgVyxVJEuvsbagtM6Qmmvu8VS2YsRZXxC+DyIxTLIyX87KhaRLrlbHV869b3NG1e+c9A3rXXUg==
   dependencies:
     "@coral-xyz/common-public" "*"
     "@coral-xyz/themes" "*"

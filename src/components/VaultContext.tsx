@@ -50,8 +50,8 @@ export const useVaultPortfolioValue = () => {
         const vaultTokenAccount = tokenAccountsMap.get(
           vault.accounts.vaultOwnershipTokenMint
         );
-        const vaultOwnershipToken = tokenMap[vault.accounts.vaultOwnershipTokenMint]
         const vaultTokenAmount = vaultTokenAccount?.amount?.toNumber() || 0;
+        const vaultOwnershipToken = tokenMap[vault.accounts.vaultOwnershipTokenMint]
         const vaultTokenUiAmount =
           vaultTokenAmount * 10 ** -vaultOwnershipToken.decimals;
         const unstakedAmountInCollateralAsset =
