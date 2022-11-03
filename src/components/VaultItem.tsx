@@ -27,34 +27,48 @@ export const VaultItem: React.FC<{ id: string }> = ({ id }) => {
         paddingBottom: 14,
         paddingTop: 14,
         height: "auto",
-        width: "auto",
+        width: "100%",
       }}
     >
-      <View style={{ display: "flex", flexDirection: "row" }}>
-        <Image src={token.icon} style={{ height: 40, width: 40 }} />
-        <View style={{ marginLeft: 8 }}>
-          <Typography color="primary" variant="text1">
-            {asset}
-          </Typography>
-          <Typography
-            color="primary"
-            style={{ textTransform: "capitalize" }}
-            variant="text1"
-          >
-            {vaultType}
-          </Typography>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <View>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Image src={token.icon} style={{ height: 40, width: 40 }} />
+            <View style={{ marginLeft: 8 }}>
+              <Typography color="primary" variant="text1">
+                {asset}
+              </Typography>
+              <Typography
+                color="primary"
+                style={{ textTransform: "capitalize" }}
+                variant="text1"
+              >
+                {vaultType}
+              </Typography>
+            </View>
+          </View>
+          <View style={{ marginTop: 12 }}>
+            <Typography
+              color="primary"
+              style={{ marginBottom: 4 }}
+              variant="text3"
+            >
+              Deposited ({depositPercent.toFixed(2)}%)
+            </Typography>
+            <ProgressBar percent={depositPercent} />
+          </View>
         </View>
-      </View>
-      <View style={{ marginTop: 16 }}>
         <Typography color="title" variant="text2">
           {vault.apy.currentEpochApy.toFixed(2)}% APY
         </Typography>
-      </View>
-      <View style={{ marginTop: 12 }}>
-        <Typography color="primary" style={{ marginBottom: 4 }} variant="text3">
-          Deposited ({depositPercent.toFixed(2)}%)
-        </Typography>
-        <ProgressBar percent={depositPercent} />
       </View>
     </Button>
   );
