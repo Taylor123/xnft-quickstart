@@ -38,6 +38,7 @@ export type Vault = {
     vaultOwnershipTokenMint: string;
   };
   version: number;
+  vaultType: number;
   status: {
     nextEpochStartTime: number;
     optionsActive: boolean;

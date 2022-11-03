@@ -21,6 +21,7 @@ export const VaultContextProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     // fetch vaults
     (async () => {
+      console.log("taylor network ", network);
       const resp = await getVaults(network);
       setVaults(resp?.vaults ?? {});
     })();
@@ -42,7 +43,7 @@ export const useVault = (id: string) => {
 export const useVaultPortfolioValue = () => {
   const vaults = useVaults();
   const tokenAccountsMap = useTokenAccountMap();
-  const tokenMap = useTokens()
+  const tokenMap = useTokens();
 
   return useMemo(
     () =>
@@ -51,7 +52,8 @@ export const useVaultPortfolioValue = () => {
           vault.accounts.vaultOwnershipTokenMint
         );
         const vaultTokenAmount = vaultTokenAccount?.amount?.toNumber() || 0;
-        const vaultOwnershipToken = tokenMap[vault.accounts.vaultOwnershipTokenMint]
+        const vaultOwnershipToken =
+          tokenMap[vault.accounts.vaultOwnershipTokenMint];
         const vaultTokenUiAmount =
           vaultTokenAmount * 10 ** -vaultOwnershipToken.decimals;
         const unstakedAmountInCollateralAsset =

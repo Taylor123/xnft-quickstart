@@ -15,18 +15,23 @@ export const Home = () => {
   const tokenAccountsMap = useTokenAccountMap();
   const [positionsOnly, setPositionsOnly] = useState(false);
   const filteredVaultList = useMemo(() => {
-    if (!positionsOnly) {
-      return vaultList;
-    }
-    return vaultList.filter(vaultId => {
+    return vaultList.filter((vaultId) => {
       const vault = vaults[vaultId];
+
+      if (vault.vaultType !== 0) {
+        return false;
+      }
+
+      if (!positionsOnly) {
+        return true;
+      }
       const vaultTokenAccount = tokenAccountsMap.get(
         vault.accounts.vaultOwnershipTokenMint
       );
       const vaultTokenAmount = vaultTokenAccount?.amount?.toNumber() || 0;
       return !!vaultTokenAmount;
-    })
-  }, [positionsOnly, vaultList])
+    });
+  }, [positionsOnly, vaultList]);
 
   return (
     <View>
