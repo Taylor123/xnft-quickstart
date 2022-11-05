@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@coral-xyz/xnft-cli": "latest"
+    "@coral-xyz/xnft-cli": "^0.2.0-latest.418"
   },
   "dependencies": {
     "@mithraic-labs/psyfi-sdk": "^1.0.1",
@@ -22,6 +22,6 @@
     "bignumber.js": "^9.1.0",
     "process": "^0.11.10",
     "react": "^17.0.2",
-    "react-xnft": "^0.1.0-latest.2165"
+    "react-xnft": "^0.2.0-latest.418"
   }
 }

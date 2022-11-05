@@ -21,7 +21,6 @@ export const VaultContextProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     // fetch vaults
     (async () => {
-      console.log("taylor network ", network);
       const resp = await getVaults(network);
       setVaults(resp?.vaults ?? {});
     })();
